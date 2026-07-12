@@ -1,12 +1,12 @@
-// pages/Analytics.jsx
-
-import React, { useState, useEffect } from 'react';
+// pages/Analytics.tsx
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { api } from '../api/employeeApi';
+import { Employee } from '../types/employee';
 
 export default function Analytics() {
   const { t } = useTranslation();
-  const [employees, setEmployees] = useState([]);
+  const [employees, setEmployees] = useState<Employee[]>([])
 
   useEffect(() => {
     api.getEmployees().then(data => setEmployees(data));

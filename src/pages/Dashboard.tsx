@@ -1,48 +1,45 @@
-// pages/Dashboard.jsx
-import React, { useState, useEffect, useMemo } from 'react';
+// pages/Dashboard.tsx
+import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { api } from '../api/employeeApi';
-
-import Pagination from '../components/Pagination';
 import EmployeeForm from '../components/EmployeeForm';
-import EmployeeTable from '../components/EmployeeTable';
+import EmployeeTable, { SortKey } from '../components/EmployeeTable';
 import EmployeeFilters from '../components/EmployeeFilters';
 import EditEmployeeModal from '../components/EditEmployeeModal';
+import Pagination from '../components/Pagination';
+import { Employee, DashboardProps} from '../types/employee'; // <-- Das Interface importieren
 
-export default function Dashboard() {
+
+
+export default function Dashboard({ employees, onSync }: DashboardProps) {
   const { t } = useTranslation();
-  const [employees, setEmployees] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDept, setSelectedDept] = useState('Alle');
   const [selectedStatus, setSelectedStatus] = useState('Alle');
-  const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'asc' });
+  
+  // SortConfig-Typisierung anpassen
+  const [sortConfig, setSortConfig] = useState<{ key: SortKey; direction: 'asc' | 'desc' }>({ 
+    key: 'id', 
+    direction: 'asc' 
+  });
+  
   const [currentPage, setCurrentPage] = useState(1);
-  const [editingEmployee, setEditingEmployee] = useState(null);
-  const itemsPerPage = 5;
+  const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null);
+  const itemsPerPage = 4;
 
-  useEffect(() => {
-    api.getEmployees().then(data => setEmployees(data));
-  }, []);
-
-  const syncData = async (updatedList) => {
-    setEmployees(updatedList);
-    await api.saveEmployees(updatedList);
-  };
-
-  const handleAddEmployee = (newEmp) => {
+  const handleAddEmployee = (newEmp: Omit<Employee, 'id'>) => {
     const updated = [...employees, { ...newEmp, id: Date.now() }];
-    syncData(updated);
+    onSync(updated);
     setCurrentPage(1);
   };
 
-  const handleDeleteEmployee = (id) => {
+  const handleDeleteEmployee = (id: number) => {
     const updated = employees.filter(emp => emp.id !== id);
-    syncData(updated);
+    onSync(updated);
   };
 
-  const handleUpdateEmployee = (updatedEmp) => {
+  const handleUpdateEmployee = (updatedEmp: Employee) => {
     const updated = employees.map(emp => emp.id === updatedEmp.id ? updatedEmp : emp);
-    syncData(updated);
+    onSync(updated);
     setEditingEmployee(null);
   };
 
@@ -67,39 +64,45 @@ export default function Dashboard() {
     return result;
   }, [employees, searchQuery, selectedDept, selectedStatus, sortConfig]);
 
-
   const totalPages = Math.ceil(filteredAndSorted.length / itemsPerPage);
-
   const paginated = useMemo(() => {
     const start = (currentPage - 1) * itemsPerPage;
     return filteredAndSorted.slice(start, start + itemsPerPage);
   }, [filteredAndSorted, currentPage]);
 
   return (
-    <div className="space-y-8">      
+    <div className="space-y-8">
+      <header>
+        <h1 className="text-3xl font-black text-slate-800 tracking-tight">{t('title')}</h1>
+        <p className="text-sm text-slate-500 mt-1">{t('subtitle')}</p>
+      </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <div className="lg:col-span-9 space-y-4">                   
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-1">
+          <EmployeeForm onAdd={handleAddEmployee} />
+        </div>
+        <div className="lg:col-span-2 space-y-4">
+          
           <EmployeeFilters 
             searchQuery={searchQuery} setSearchQuery={setSearchQuery}
             selectedDept={selectedDept} setSelectedDept={setSelectedDept}
             selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus}
           />
+          
           <EmployeeTable 
             employees={paginated} onDelete={handleDeleteEmployee} 
-            onEdit={setEditingEmployee} onSort={(key) => setSortConfig(p => ({ key, direction: p.key === key && p.direction === 'asc' ? 'desc' : 'asc' }))}
+            onEdit={setEditingEmployee} 
+            onSort={(key) => setSortConfig(p => ({ key, direction: p.key === key && p.direction === 'asc' ? 'desc' : 'asc' }))}
             sortConfig={sortConfig}
           />
-          {/* als  Komponente aufgerufen */}
+          
           <Pagination 
             currentPage={currentPage} 
             totalPages={totalPages} 
             onPageChange={setCurrentPage} 
           />
+          
         </div>
-        <div className="lg:col-span-3">
-          <EmployeeForm onAdd={handleAddEmployee} />
-        </div>        
       </div>
       {editingEmployee && <EditEmployeeModal employee={editingEmployee} onClose={() => setEditingEmployee(null)} onSave={handleUpdateEmployee} />}
     </div>

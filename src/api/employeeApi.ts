@@ -1,9 +1,9 @@
-// api/axiosApi.js
-import axios from 'axios';
+// api/employeeApi.ts
+import { Employee } from '../types/employee';
 
 const STORAGE_KEY = 'mock_employees';
 
-const INITIAL_DATA = [
+const INITIAL_DATA: Employee[] =[
   { id: 1, name: 'Anna Schmidt', email: 'anna.s@firma.de', department: 'IT', position: 'Frontend Entwicklerin', status: "Home Office"},
   { id: 2, name: 'Michael Weber', email: 'm.weber@firma.de', department: 'HR', position: 'Personalreferent',status: "Aktiv vor Ort" },
   { id: 3, name: 'Sofia Becker', email: 's.becker@firma.de', department: 'Marketing', position: 'Content Manager',status: "Home Office" },
@@ -23,43 +23,20 @@ const INITIAL_DATA = [
   { id:17,name: "O. Henry", email: "o.henry@firma.de", department: "Design", position: "Hoch UX Designer", status: "Aktiv vor Ort",}
 ];
 
-// LocalStorage initialisieren falls leer
 if (!localStorage.getItem(STORAGE_KEY)) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_DATA));
 }
 
 export const api = {
-
-    async getEmployees() {
-    // Simuliert Netzwerklatenz
+  async getEmployees(): Promise<Employee[]> {
     await new Promise(resolve => setTimeout(resolve, 300));
-    return JSON.parse(localStorage.getItem(STORAGE_KEY));
+    const data = localStorage.getItem(STORAGE_KEY);
+    return data ? JSON.parse(data) : [];
   },
-  async saveEmployees(employees) {
+  
+  async saveEmployees(employees: Employee[]): Promise<Employee[]> {
     await new Promise(resolve => setTimeout(resolve, 200));
     localStorage.setItem(STORAGE_KEY, JSON.stringify(employees));
     return employees;
-  },
-
-  async addEmployee(employee) {  
-    const db =await getEmployees();
-    const newEmp = { ...employee, id: Date.now() };
-    db.push(newEmp);
-    saveDB(db);
-    return { data: newEmp };
-  },
-
-  async updateEmployee(employee) {   
-    const db =await getEmployees();
-    const updated = db.map(e => e.id === employee.id ? employee : e);
-    saveDB(updated);
-    return { data: employee };
-  },
-  
-  async deleteEmployee(id) {
-    const db =await getEmployees();
-    const filtered = db.filter(e => e.id !== id);
-    saveDB(filtered);
-    return { data: { success: true } };
   }
 };

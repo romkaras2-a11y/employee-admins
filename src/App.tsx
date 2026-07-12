@@ -1,23 +1,26 @@
 
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { api } from './api/employeeApi';
-import Dashboard from './pages/Dashboard';
-import Analytics from './pages/Analytics'; 
+import { Employee } from './types/employee.ts';
+import Dashboard from './pages/Dashboard.tsx';
+import Analytics from './pages/Analytics.tsx'; 
 import NavLinks from './components/NavLinks';
 import DataInterface from './components/DataInterface';
 import LoadingOverlay from './components/LoadingOverlay';
 
 export default function App() {
   const { t, i18n } = useTranslation();
-  const [employees, setEmployees] = useState([]);
+  const [employees, setEmployees] = useState<Employee[]>([]);
   const [isSaving, setIsSaving] = useState(false);
   // Daten beim Start über Axios-Mock laden
-  useEffect(() => {  api.getEmployees().then(data => setEmployees(data));  }, []);
+ useEffect(() => {
+    api.getEmployees().then(data => setEmployees(data));
+  }, []);
 
-  // Zentrale Speicherfunktion für alle Unterkomponenten
-  const syncData = async (updatedList) => {
+  // Zentrale Speicherfunktion für alle Unterkomponenten (mit exakter TypeScript-Typisierung)
+  const syncData = async (updatedList: Employee[]): Promise<void> => {
     setIsSaving(true); // Wartemaske einschalten
     try {
       setEmployees(updatedList);
@@ -29,7 +32,7 @@ export default function App() {
       setIsSaving(false); // Wartemaske nach Abschluss (oder Fehler) ausschalten
     }
   };
-  const changeLanguage = (lng) => {  i18n.changeLanguage(lng);  };
+  const changeLanguage = (lng:string) => {  i18n.changeLanguage(lng);  };
 
   return (
     <Router>
@@ -70,7 +73,7 @@ export default function App() {
         {/* Routen-Inhalt */}
         <main className="max-w-6xl mx-auto p-6 sm:p-12">
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<Dashboard employees={employees} onSync={syncData}/>} />
             <Route path="/analytics" element={<Analytics />} /> {/* <-- Neue Route registrieren */}
           </Routes>
         </main>
