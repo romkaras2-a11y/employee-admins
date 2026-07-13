@@ -2,16 +2,16 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Employee, DashboardProps} from '../types/employee'; 
+import { useEmployeeFilterAndSort } from '../hooks/useEmployeeFilterAndSort';
+
 import EmployeeForm from '../components/EmployeeForm';
 import EmployeeFilters from '../components/EmployeeFilters';
 import EditEmployeeModal from '../components/EditEmployeeModal';
 import Pagination from '../components/Pagination';
-// Beide Tabellen-Varianten importieren
 import EmployeeTable from '../components/EmployeeTable';
 import EmployeeDataTable from '../components/EmployeeDataTable';
 
-import { Employee, DashboardProps} from '../types/employee'; 
-import { useEmployeeFilterAndSort } from '../hooks/useEmployeeFilterAndSort';
 
 export default function Dashboard({ employees, onSync }: DashboardProps) {
   const { t } = useTranslation();

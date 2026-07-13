@@ -1,9 +1,12 @@
 // hooks/useEmployeeFilterAndSort.ts
 import { useState, useMemo, useEffect } from 'react';
-import { UseEmployeeFilterAndSortProps } from '../types/employee';
+import { Employee, SortKey } from '../types/employee';
 
-export type SortKey = 'name' | 'department' | 'status' | 'id';
 
+interface UseEmployeeFilterAndSortProps {
+  employees: Employee[];
+  itemsPerPage?: number;
+}
 
 export function useEmployeeFilterAndSort({ employees, itemsPerPage = 4 }: UseEmployeeFilterAndSortProps) {
   const [searchQuery, setSearchQuery] = useState('');

@@ -6,10 +6,8 @@ import { Employee,EmployeeDataTableProps } from '../types/employee';
 import DataTable from 'datatables.net-react';
 import DT from 'datatables.net-dt';
 import 'datatables.net-responsive-dt';
-DataTable.use(DT);
 import 'datatables.net-dt/css/dataTables.dataTables.min.css';
-
-
+DataTable.use(DT);
 
 export default function EmployeeDataTable({ employees, onDelete, onEdit }: EmployeeDataTableProps) {
   const { t } = useTranslation();

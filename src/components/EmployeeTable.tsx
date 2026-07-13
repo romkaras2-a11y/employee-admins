@@ -1,9 +1,8 @@
 //components/EmployeeTable.tsx
-
 import { useTranslation } from 'react-i18next';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { EmployeeTableProps } from '../types/employee';
-import { SortKey } from '../hooks/useEmployeeFilterAndSort';
+import { EmployeeTableProps,SortKey } from '../types/employee';
+
 
 export default function EmployeeTable({ employees, onDelete, onEdit, onSort, sortConfig }: EmployeeTableProps) {
   const { t } = useTranslation();

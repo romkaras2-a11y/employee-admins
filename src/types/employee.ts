@@ -1,5 +1,6 @@
 // types/employee.ts
-import { SortKey } from '../hooks/useEmployeeFilterAndSort';
+
+export type SortKey = 'name' | 'department' | 'status' | 'id';
 
 export interface Employee {
   id: number;
@@ -54,9 +55,4 @@ export interface EmployeeTableProps {
   onEdit: (employee: Employee) => void;
   onSort: (key: SortKey) => void;
   sortConfig: { key: SortKey; direction: 'asc' | 'desc' };
-}
-// Interface für Filterung und Sortierung in Tables und Dashboard
-export interface UseEmployeeFilterAndSortProps {
-  employees: Employee[];
-  itemsPerPage?: number;
 }
