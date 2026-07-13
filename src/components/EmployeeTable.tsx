@@ -1,23 +1,15 @@
 //components/EmployeeTable.tsx
-import React from 'react';
+
 import { useTranslation } from 'react-i18next';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { Employee } from '../types/employee';
-
-// Typen für die Sortierung definieren
-export type SortKey = 'name' | 'department' | 'status' | 'id';
-
-interface EmployeeTableProps {
-  employees: Employee[];
-  onDelete: (id: number) => void;
-  onEdit: (employee: Employee) => void;
-  onSort: (key: SortKey) => void;
-  sortConfig: { key: SortKey; direction: 'asc' | 'desc' };
-}
+import { EmployeeTableProps } from '../types/employee';
+import { SortKey } from '../hooks/useEmployeeFilterAndSort';
 
 export default function EmployeeTable({ employees, onDelete, onEdit, onSort, sortConfig }: EmployeeTableProps) {
   const { t } = useTranslation();
-  const getIcon = (k: SortKey) => sortConfig.key === k ? (sortConfig.direction === 'asc' ? ' 🔼' : ' 🔽') : ' ↕️';
+
+  // Dynamisches Icon für die Tabellen-Header generieren
+ const getIcon = (k: SortKey) => sortConfig.key === k ? (sortConfig.direction === 'asc' ? ' 🔼' : ' 🔽') : ' ↕️';
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
@@ -25,6 +17,7 @@ export default function EmployeeTable({ employees, onDelete, onEdit, onSort, sor
         <table className="w-full text-left border-collapse table-fixed min-w-[640px]" aria-label="Mitarbeiterliste">
           <thead>
             <tr className="bg-slate-50 border-b border-slate-200 text-xs font-bold uppercase text-slate-500">
+              {/* Bei Klick wird nun die interne handleSort-Funktion aufgerufen */}
               <th onClick={() => onSort('name')} className="w-[30%] py-3 px-4 cursor-pointer select-none hover:bg-slate-100 focus:bg-slate-100 outline-none" tabIndex={0} role="columnheader">
                 {t('name')}{getIcon('name')}
               </th>

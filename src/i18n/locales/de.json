@@ -34,5 +34,8 @@
   "importSuccess": "Mitarbeiter erfolgreich importiert!",
   "importError": "Ungültiges JSON-Format oder fehlende Pflichtfelder.",
   "loadingTitle": "Daten werden synchronisiert...",
-  "loadingSubtitle": "Bitte warten Sie einen Augenblick."
+  "loadingSubtitle": "Bitte warten Sie einen Augenblick.",
+  "toggleTableType": "Tabellenansicht wechseln",
+  "tableCustom": "Eigenbau-Tabelle",
+  "tableDataTables": "DataTables.net"
 }

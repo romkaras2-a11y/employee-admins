@@ -1,21 +1,15 @@
 //components/Pagination.jsx
-import React from 'react';
 import { useTranslation } from 'react-i18next';
-
-export default function Pagination({ currentPage, totalPages, onPageChange }) {
+import{PaginationProps} from '../types/employee'
+export default function Pagination({ currentPage, totalPages, onPageChange }:PaginationProps) {
   const { t } = useTranslation();
 
   if (totalPages <= 1) return null;
 
   return (
-    <div 
-      className="flex flex-col sm:flex-row justify-between items-center bg-white p-4 rounded-xl border border-slate-200 shadow-xs gap-4" 
-      aria-label="Pagination"
+    <div aria-label="Pagination"
+      className="flex flex-col sm:flex-row justify-center items-center bg-white p-4 rounded-xl border border-slate-200 shadow-xs gap-4" 
     >
-      {/* Textuelle Anzeige */}
-      <span className="text-sm text-slate-600">
-        {t('page')} {currentPage} {t('of')} {totalPages}
-      </span>
       
       {/* Navigations-Buttons */}
       <div className="flex flex-wrap items-center gap-1.5" role="navigation" aria-label="Pagination Navigation">

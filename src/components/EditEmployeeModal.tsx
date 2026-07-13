@@ -1,13 +1,14 @@
 // components/EditEmployeeModal.jsx
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { EditEmployeeModalProps } from '../types/employee';
 
-export default function EditEmployeeModal({ employee, onClose, onSave }) {
+export default function EditEmployeeModal({ employee, onClose, onSave }: EditEmployeeModalProps) {
   const { t } = useTranslation();
   const [formData, setFormData] = useState({ ...employee });
 
   useEffect(() => {
-    const handleEscape = (e) => { if (e.key === 'Escape') onClose(); };
+    const handleEscape = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', handleEscape);
     return () => window.removeEventListener('keydown', handleEscape);
   }, [onClose]);
@@ -22,29 +23,29 @@ export default function EditEmployeeModal({ employee, onClose, onSave }) {
 
         <form onSubmit={(e) => { e.preventDefault(); onSave(formData); }} className="p-6 space-y-4">
           <div>
-            <label htmlFor="edit-name" className="block text-xs font-bold uppercase text-slate-500 mb-1">{t('name')}</label>
+            <label htmlFor="edit-name" className="block text-[14px] font-bold uppercase text-slate-500 mb-1">{t('name')}</label>
             <input id="edit-name" type="text" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" />
           </div>
 
           <div>
-            <label htmlFor="edit-email" className="block text-xs font-bold uppercase text-slate-500 mb-1">{t('email')}</label>
+            <label htmlFor="edit-email" className="block text-[14px] font-bold uppercase text-slate-500 mb-1">{t('email')}</label>
             <input id="edit-email" type="email" required value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label htmlFor="edit-dept" className="block text-xs font-bold uppercase text-slate-500 mb-1">{t('department')}</label>
+              <label htmlFor="edit-dept" className="block text-[14px] font-bold uppercase text-slate-500 mb-1">{t('department')}</label>
               <select id="edit-dept" value={formData.department} onChange={e => setFormData({...formData, department: e.target.value})} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                <option value="IT">IT</option>
-                <option value="HR">HR</option>
-                <option value="Marketing">Marketing</option>
                 <option value="Design">Design</option>
-                <option value="Finanzen">Finanzen</option>
+                <option value="Finanzen">Finanzen</option>          
+                <option value="HR">HR</option>
+                <option value="IT">IT</option>
+                <option value="Marketing">Marketing</option> 
               </select>
             </div>
             <div>
-              <label htmlFor="edit-status" className="block text-xs font-bold uppercase text-slate-500 mb-1">{t('status')}</label>
-              <select id="edit-status" value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
+              <label htmlFor="edit-status" className="block text-[14px] font-bold uppercase text-slate-500 mb-1">{t('status')}</label>
+              <select id="edit-status" value={formData.status} onChange={e => setFormData({...formData, status: e.target.value as 'Home Office' | 'Aktiv vor Ort'})} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 <option value="Aktiv vor Ort">{t('activeOnSite')}</option>
                 <option value="Home Office">{t('homeOffice')}</option>
               </select>
@@ -52,7 +53,7 @@ export default function EditEmployeeModal({ employee, onClose, onSave }) {
           </div>
 
           <div>
-            <label htmlFor="edit-pos" className="block text-xs font-bold uppercase text-slate-500 mb-1">{t('position')}</label>
+            <label htmlFor="edit-pos" className="block text-[14px] font-bold uppercase text-slate-500 mb-1">{t('position')}</label>
             <input id="edit-pos" type="text" required value={formData.position} onChange={e => setFormData({...formData, position: e.target.value})} className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" />
           </div>
 

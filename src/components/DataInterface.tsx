@@ -18,7 +18,7 @@ export default function DataInterface({ employees, onImportSuccess }: DataInterf
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(employees, null, 2));
     const downloadAnchor = document.createElement('a');
     downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", `mitarbeiter_export_${Date.now()}.json`);
+    downloadAnchor.setAttribute("download", `mitarbeiter_liste_${Date.now()}.json`);
     document.body.appendChild(downloadAnchor);
     downloadAnchor.click();
     downloadAnchor.remove();

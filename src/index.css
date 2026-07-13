@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+/* Korrektur für DataTables innerhalb von Tailwind-Karten */
+.dt-container {
+  @apply w-full overflow-hidden;
+}
+table.dataTable {
+  @apply !border-collapse !my-0;
+}
+table.dataTable th {
+  @apply !border-b !border-slate-200;
+}
+div.dt-container.dt-empty-footer tbody>tr:last-child>*{
+   border-bottom: none; 
+}
+div.dt-container div.dt-layout-row{
+    margin-bottom: 0;
+}

@@ -34,5 +34,8 @@
   "importSuccess": "Employees successfully imported!",
   "importError": "Invalid JSON format or missing required fields.",
   "loadingTitle": "Synchronizing data...",
-  "loadingSubtitle": "Please wait a moment."
+  "loadingSubtitle": "Please wait a moment.",
+   "toggleTableType": "Switch Table View",
+  "tableCustom": "Custom Table", 
+  "tableDataTables": "DataTables.net"
 }

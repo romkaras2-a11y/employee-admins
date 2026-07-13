@@ -71,7 +71,7 @@ export default function App() {
         </nav>
 
         {/* Routen-Inhalt */}
-        <main className="max-w-6xl mx-auto p-6 sm:p-12">
+        <main className="max-w-[90%] mx-auto p-6 sm:p-12">
           <Routes>
             <Route path="/" element={<Dashboard employees={employees} onSync={syncData}/>} />
             <Route path="/analytics" element={<Analytics />} /> {/* <-- Neue Route registrieren */}
