@@ -47,7 +47,7 @@ src/
 │   ├── locales/
 │   │   ├── de.json            # Deutsche Übersetzungsdaten (Reines JSON)
 │   │   └── en.json            # Englische Übersetzungsdaten (Reines JSON)
-│   └── config.js              # i18next Framework-Initialisierung
+│   └── config.ts              # i18next Framework-Initialisierung
 ├── pages/                   # Seiten-Komponenten (Smart Components / Routen)
 │   ├── Analytics.tsx          # Statistische Auswertungen (Home Office vs. Vor Ort)
 │   └── Dashboard.tsx          # Hauptverwaltungsoberfläche mit Tabellen-Umschalter
@@ -95,6 +95,9 @@ JSON.parse(localStorage.getItem('mock_employees'))
 ```
 
 ---
+## 📝 Lizenz
+
+MIT License - Freie Nutzung für private und kommerzielle Zwecke.
 
 ## Author
 
