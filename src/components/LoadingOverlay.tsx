@@ -1,8 +1,8 @@
 // components/LoadingOverlay.jsx
-import React from 'react';
+//import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-export default function LoadingOverlay({ isVisible }) {
+export default function LoadingOverlay({ isVisible = false }) {
   const { t } = useTranslation();
 
   if (!isVisible) return null;
