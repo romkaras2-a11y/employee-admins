@@ -1,4 +1,4 @@
-# 🏢 Mitarbeiterverwaltung v2.0 (Enterprise TypeScript Edition)
+# 🏢 Demo Mitarbeiterverwaltung v2.0 (TypeScript Edition)
 
 Eine moderne, dynamische und barrierefreie Single-Page-Applikation zur internen Mitarbeiterverwaltung im mittelständischen Unternehmen. Diese Software ersetzt das veraltete Altsystem vollständig und wurde nach modernen Software-Standards mit **React**, **TypeScript**, **Tailwind CSS (v4)** und **Axios** realisiert.
 
