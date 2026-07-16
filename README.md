@@ -85,5 +85,10 @@ JSON.parse(localStorage.getItem('mock_employees'))
 
 ---
 
-## 📄 Lizenz
-Interne Software der Firma – Alle Rechte vorbehalten.
+## 📝 Lizenz
+
+MIT License - Freie Nutzung für private und kommerzielle Zwecke.
+
+## Author
+
+Roman Karas
